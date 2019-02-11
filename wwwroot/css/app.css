@@ -1,0 +1,7 @@
+#color-picker-container {
+    height: 400px;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #01579b;
+}
