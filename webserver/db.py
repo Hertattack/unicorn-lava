@@ -51,3 +51,7 @@ def getLastUsedColor(connection):
         }
 
     return result
+
+def deleteUsedColor(connection, red, green, blue):
+    c = connection.cursor()
+    c.execute('''DELETE FROM [colors] WHERE red = ? AND blue = ? AND green = ?''', (red,green,blue))

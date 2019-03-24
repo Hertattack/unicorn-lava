@@ -7,6 +7,10 @@ demoColorPicker.on("input:end", function onInputStart() {
     }
 });
 
+demoColorPicker.on('mount', loadPreviousColors);
+
+loadPreviousColors.colorPicker = demoColorPicker;
+
 function setAutoUpdate(checkBox){
     autoUpdate = checkBox.checked === true;
 }
@@ -35,7 +39,7 @@ function setColor(red, green, blue, addButton){
 
 function addColorButton(red,green,blue){
     var colorOutput = document.querySelector("#selectedColors");
-    colorOutput.innerHTML = `<a class="waves-effect waves-light btn" style="margin:4px; background-color: rgb(${red},${green},${blue});" onClick="setColor(${red},${green},${blue})" onContextMenu="deleteColor(${red},${green},${blue})">&nbsp;&nbsp;</a>${colorOutput.innerHTML}`;
+    colorOutput.innerHTML = `<a class="waves-effect waves-light btn" style="margin:4px; background-color: rgb(${red},${green},${blue});" onClick="setColor(${red},${green},${blue})" onContextMenu="deleteColor(this, ${red},${green},${blue})">&nbsp;&nbsp;</a>${colorOutput.innerHTML}`;
 }
 
 function setLastColor(red,green,blue){
@@ -55,6 +59,7 @@ function loadPreviousColors(){
             var colors = JSON.parse(Http.responseText);
             if(colors.length > 0){
                 setLastColor(colors[0][0],colors[0][1],colors[0][2]);
+                loadPreviousColors.colorPicker.color.rgb = {r:colors[0][0],g:colors[0][1],b:colors[0][2]};
             }
             colors.reverse().forEach(
                 color => {
@@ -65,6 +70,19 @@ function loadPreviousColors(){
     }
 }
 
-function deleteColor(red, green, blue){
-    alert('Delete?');
+function deleteColor(element, red, green, blue){
+    var remove = confirm('Delete color?');
+    if(remove == true){
+        const Http = new XMLHttpRequest();
+        const url=`api/deleteColor?red=${red}&green=${green}&blue=${blue}`;
+
+        Http.open("DELETE", url);
+        Http.send();
+
+        Http.onreadystatechange=(e)=>{
+            if(Http.readyState === 4 && Http.status === 200){
+                element.parentElement.removeChild(element);
+            }
+        }
+    }
 }

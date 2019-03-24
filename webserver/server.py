@@ -82,6 +82,20 @@ def getPreviousColors():
     response.content_type = 'application/json'
     return dumps(colors)
 
+@route('/api/deleteColor', method="DELETE")
+def deleteColor():
+    currentRed = request.query.red or currentRed
+    currentGreen = request.query.green or currentGreen
+    currentBlue = request.query.blue or currentBlue
+
+    intRed = int(currentRed)
+    intGreen = int(currentGreen)
+    intBlue = int(currentBlue)
+
+    db.deleteUsedColor(options["connection"], intRed, intGreen, intBlue)
+
+    response.status = 200
+
 @route('/api/setColor')
 def setColor():
     currentRed = request.query.red or currentRed
