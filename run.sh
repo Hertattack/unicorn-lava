@@ -1,2 +1,2 @@
 #!/bin/sh
-./webserver/server.py 80
+./webserver/server.py 8080

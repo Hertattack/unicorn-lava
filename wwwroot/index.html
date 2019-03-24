@@ -29,7 +29,10 @@
                             On
                           </label>
                         </div><br/>
-                    <a class="waves-effect waves-light light-blue btn" onClick="setColorFromPicker()"><i class="material-icons left">pets</i>Set Color</a>
+                    <a class="waves-effect waves-light light-blue btn" onClick="setColorFromPicker()"><i class="material-icons left">pets</i>Set Color</a><br/><br/>
+                    <div><b>Last Applied:</b> 
+                    <div id="last-used-color"></div>
+                    </div>
                   </div>
                   <div class="col s6" id="color-picker-container"></div>
                   <div class="col s3" id="selectedColors"></div>
@@ -39,5 +42,8 @@
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script>
+      loadPreviousColors();
+    </script>
   </body>
 </html>
